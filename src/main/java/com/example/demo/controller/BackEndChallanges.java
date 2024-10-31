@@ -7,10 +7,6 @@ import com.example.demo.dto.backendchallanges.Collatz;
 import com.example.demo.dto.backendchallanges.CuritibaRes;
 import com.example.demo.dto.backendchallanges.ImaExp;
 
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 import java.util.*;
 
 // um único controlador com baseurl
