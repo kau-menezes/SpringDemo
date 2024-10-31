@@ -15,6 +15,8 @@ import java.util.*;
 public class BackEndChallanges {
     
 
+    /* ----------------------------------- C1 ----------------------------------- */
+
     @GetMapping("/reverse/{string}")
     public ArrayList<String> palindromeCheck(@PathVariable String string) {
         ArrayList<String> result = new ArrayList<>();
@@ -38,6 +40,8 @@ public class BackEndChallanges {
         return result;
 
     }
+
+    /* ----------------------------------- C2 ----------------------------------- */
 
     @GetMapping("/imaexp")
     public ImaExp imaginaryExponential(Double A, Double b) {
@@ -72,6 +76,8 @@ public class BackEndChallanges {
     //     return ResponseEntity.ok(new CollatzRes(new_current));
     // }
 
+    /* ----------------------------------- C3 ----------------------------------- */
+
     @GetMapping("/collatz")
     public ResponseEntity<Collatz> collatzConjecure(Integer step, Integer current) {
 
@@ -94,6 +100,8 @@ public class BackEndChallanges {
 
         return ResponseEntity.ok(new Collatz(new_current));
     }
+
+    /* ----------------------------------- C4 ----------------------------------- */
 
     @GetMapping("/curitiba")
     public CuritibaRes curitiba(String cep, String cpf) throws Exception {
@@ -129,6 +137,8 @@ public class BackEndChallanges {
         return new CuritibaRes(resultArray);
     }
 
+    /* ----------------------------------- C5 ----------------------------------- */
 
+    
 
 }
