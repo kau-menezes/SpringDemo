@@ -4,8 +4,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.demo.dto.backendchallanges.Collatz;
+import com.example.demo.dto.backendchallanges.CuritibaRes;
 import com.example.demo.dto.backendchallanges.ImaExp;
 
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.util.*;
 
 // um único controlador com baseurl
@@ -94,29 +99,39 @@ public class BackEndChallanges {
         return ResponseEntity.ok(new Collatz(new_current));
     }
 
-    // @GetMapping("/curitiba")
-    // public CuritibaRes curitiba(String cep, String cpf) throws Exception {
-        // ArrayList<String> resultArray = new ArrayList<>();
-        // HttpRequest requestCep = HttpRequest.newBuilder()
-        //         .uri(new URI("https://viacep.com.br/ws/" + cep + "/json/"))
-        //         .GET()
-        //         .build();
-        // // HttpResponse<Curitiba> response = HttpClient.newHttpClient()
-        //         // .send(request, HttpResponse.BodyHandlers.ofString());
-        // HttpResponse<String> responseCep = HttpClient.newHttpClient()
-        // .send(requestCep, HttpResponse.BodyHandlers.ofString());
-        // System.out.println("Request: " + requestCep.toString());
-        // System.out.println("Response: " + responseCep.body());
-        // if (responseCep.body().localidade() != "pr") {
-        //     resultArray.add(new String("it is not curitibinha"));
-        // }
-        // Integer cpfSum = 0;
-        // for (int i = 0; i < cpf.length(); i++ ) {
-        //     cpfSum = cpfSum + cpf.charAt(i);
-        // }
-        //:(
-        // return new CuritibaRes(resultArray);
-    // }
+    @GetMapping("/curitiba")
+    public CuritibaRes curitiba(String cep, String cpf) throws Exception {
+
+        ArrayList<String> resultArray = new ArrayList<>();
+        
+        resultArray.add(new String("Unknown location for CEP " + cep));
+
+        cpf = cpf.replaceAll("[^0-9]", "");
+
+        if (cpf.length() != 11 || cpf.chars().distinct().count() == 1) {
+            resultArray.add(new String("CPF doesn't have 11 characters"));
+            return new CuritibaRes(resultArray);
+        }
+
+        for (int i = 0; i < 2; i++) {
+            int soma = 0;
+            int peso = 10 + i;
+
+            for (int j = 0; j < peso - 1; j++) {
+                soma += Character.getNumericValue(cpf.charAt(j)) * peso--;
+            }
+
+            int dv = soma % 11 < 2 ? 0 : 11 - (soma % 11);
+            if (Character.getNumericValue(cpf.charAt(peso - 1)) != dv) {
+                resultArray.add(new String("Verifying digit does not match for the CPF informed."));
+                return new CuritibaRes(resultArray);
+            }
+        }
+
+        resultArray.add(new String("CPF is valid. congrats."));
+
+        return new CuritibaRes(resultArray);
+    }
 
 
 
