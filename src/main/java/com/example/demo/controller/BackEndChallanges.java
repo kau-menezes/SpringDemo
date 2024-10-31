@@ -1,11 +1,14 @@
 package com.example.demo.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.example.demo.dto.backendchallanges.Cities;
 import com.example.demo.dto.backendchallanges.Collatz;
 import com.example.demo.dto.backendchallanges.CuritibaRes;
 import com.example.demo.dto.backendchallanges.ImaExp;
+import com.example.demo.repositories.CityRepository;
 
 import java.util.*;
 
@@ -13,8 +16,11 @@ import java.util.*;
 @RestController
 @CrossOrigin(origins = {"http://localhost:5257"})
 public class BackEndChallanges {
-    
 
+    // repository do C5
+    @Autowired
+    CityRepository cityRepo;
+    
     /* ----------------------------------- C1 ----------------------------------- */
 
     @GetMapping("/reverse/{string}")
@@ -139,6 +145,18 @@ public class BackEndChallanges {
 
     /* ----------------------------------- C5 ----------------------------------- */
 
-    
+    @GetMapping("/cities")
+    public Cities getCities() {
+        var cities = cityRepo.findAll();
+        return new Cities(cities);
+
+    }
+
+    @GetMapping("/cities/{country}")
+    public Cities getCitiesByName(@PathVariable String country) {
+        var cities = cityRepo.findByCountry(country);
+        return new Cities(cities);
+
+    }
 
 }

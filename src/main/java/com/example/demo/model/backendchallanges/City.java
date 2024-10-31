@@ -14,7 +14,7 @@ public class City {
     private Long id;
 
     @Column
-    private String Country;
+    private String country;
     
     @Column
     private String CityName;
@@ -23,11 +23,11 @@ public class City {
     private String Abbreviation;
 
     public String getCountry() {
-        return Country;
+        return country;
     }
 
     public void setCountry(String WheelCount) {
-        this.Country = WheelCount;
+        this.country = WheelCount;
     }
     
     public String getCityName() {
