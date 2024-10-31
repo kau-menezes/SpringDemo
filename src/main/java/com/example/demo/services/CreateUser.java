@@ -1,5 +1,7 @@
 package com.example.demo.services;
 
-public class CreateUser {
-    
+import com.example.demo.model.backendchallanges.UserTable;
+
+public interface CreateUser {
+    UserTable login(String username, String password);
 }
