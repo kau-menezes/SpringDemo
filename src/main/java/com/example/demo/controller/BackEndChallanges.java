@@ -6,21 +6,28 @@ import org.springframework.web.bind.annotation.*;
 
 import com.example.demo.dto.backendchallanges.Cities;
 import com.example.demo.dto.backendchallanges.Collatz;
+import com.example.demo.dto.backendchallanges.CreateUserAccount;
 import com.example.demo.dto.backendchallanges.CuritibaRes;
 import com.example.demo.dto.backendchallanges.ImaExp;
+import com.example.demo.model.backendchallanges.UserTable;
 import com.example.demo.repositories.CityRepository;
+import com.example.demo.repositories.CreateUserRepository;
 
 import java.util.*;
 
 // um único controlador com baseurl
 @RestController
-@CrossOrigin(origins = {"http://localhost:5257"})
+@CrossOrigin(origins = { "http://localhost:5257" })
 public class BackEndChallanges {
 
     // repository do C5
     @Autowired
     CityRepository cityRepo;
-    
+
+    // repository do C6
+    @Autowired
+    CreateUserRepository userRepo;
+
     /* ----------------------------------- C1 ----------------------------------- */
 
     @GetMapping("/reverse/{string}")
@@ -51,35 +58,36 @@ public class BackEndChallanges {
 
     @GetMapping("/imaexp")
     public ImaExp imaginaryExponential(Double A, Double b) {
-        
+
         Double im = Math.pow(A, Math.cos(b));
         Double re = Math.pow(A, Math.sin(b));
-        
+
         return new ImaExp(re, im);
     }
 
     // @PostMapping("/collatz")
-    // public ResponseEntity<CollatzRes> collatzConjecure(@RequestBody Collatz nums) {
+    // public ResponseEntity<CollatzRes> collatzConjecure(@RequestBody Collatz nums)
+    // {
 
-    //     if (nums.step() < 0 || nums.current() < 0) {
-    //         return ResponseEntity.status(400).build();
-    //     }
+    // if (nums.step() < 0 || nums.current() < 0) {
+    // return ResponseEntity.status(400).build();
+    // }
 
-    //     Long new_current = 0l;
+    // Long new_current = 0l;
 
-    //     if (nums.current() % 2 == 0 ) {
+    // if (nums.current() % 2 == 0 ) {
 
-    //         for (int i = 0; i < nums.step(); i++) {
-    //             new_current = nums.current() / 2;
-    //         }
+    // for (int i = 0; i < nums.step(); i++) {
+    // new_current = nums.current() / 2;
+    // }
 
-    //     } else {
-    //         for (int i = 0; i < nums.step(); i++) {
-    //             new_current = 3 * nums.current() - 1; 
-    //         }
-    //     }
+    // } else {
+    // for (int i = 0; i < nums.step(); i++) {
+    // new_current = 3 * nums.current() - 1;
+    // }
+    // }
 
-    //     return ResponseEntity.ok(new CollatzRes(new_current));
+    // return ResponseEntity.ok(new CollatzRes(new_current));
     // }
 
     /* ----------------------------------- C3 ----------------------------------- */
@@ -94,11 +102,11 @@ public class BackEndChallanges {
         Integer new_current = current;
 
         for (int i = 0; i < step; i++) {
-            if (current % 2 == 0 ) {
+            if (current % 2 == 0) {
                 new_current = new_current / 2;
-                
+
             } else {
-                new_current = 3 * new_current - 1; 
+                new_current = 3 * new_current - 1;
             }
 
             System.out.println(new_current);
@@ -113,7 +121,7 @@ public class BackEndChallanges {
     public CuritibaRes curitiba(String cep, String cpf) throws Exception {
 
         ArrayList<String> resultArray = new ArrayList<>();
-        
+
         resultArray.add(new String("Unknown location for CEP " + cep));
 
         cpf = cpf.replaceAll("[^0-9]", "");
@@ -161,5 +169,65 @@ public class BackEndChallanges {
 
     /* ----------------------------------- C6 ----------------------------------- */
 
+    @PostMapping("/create")
+    public String collatzConjecure(@RequestBody CreateUserAccount user) {
 
+        var cities = userRepo.findByEmail(user.email());
+
+        if (cities.size() > 0) {
+            return "E-mail already registered.";
+        }
+
+        if (user.password().length() < 8) {
+            return "Password must be at least 8 characters long.";
+
+        }
+
+        boolean upper = false;
+        boolean lower = false;
+        boolean num = false;
+
+        for (int i = 0; i < user.password().length(); i++) {
+            if (user.password().charAt(i) >= 65 && user.password().charAt(i) <= 90) {
+                upper = true;
+                break;
+            }
+        }
+
+        if (!upper)
+            return "Password must contain uppercase letters.";
+
+
+        for (int i = 0; i < user.password().length(); i++) {
+            if (user.password().charAt(i) >= 97 && user.password().charAt(i) <= 122) {
+                lower = true;
+                break;
+            }
+
+        }
+
+        if (!lower)
+            return "Password must contain lowercase letters.";
+
+        for (int i = 0; i < user.password().length(); i++) {
+            if (user.password().charAt(i) >= 48 && user.password().charAt(i) <= 57) {
+                num = true;
+                break;
+            }
+        }
+        
+        if (!num)
+            return "Password must contain numbers.";
+
+        
+        UserTable newUser = new UserTable();
+        newUser.setEmail(user.email());
+        newUser.setPassword(user.password());
+        newUser.setUsername(user.username());
+
+        userRepo.saveAndFlush(newUser);
+
+        return "User added to databse succesfully." ;
+
+    }
 }
