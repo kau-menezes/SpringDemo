@@ -227,7 +227,7 @@ public class BackEndChallanges {
 
         userRepo.saveAndFlush(newUser);
 
-        return "User added to databse succesfully." ;
+        return "User added to database succesfully." ;
 
     }
 }
