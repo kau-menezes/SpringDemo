@@ -42,4 +42,15 @@ public class UserTable {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    @Column
+    private String password;
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }
