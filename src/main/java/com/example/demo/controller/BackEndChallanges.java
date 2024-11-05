@@ -9,7 +9,7 @@ import com.example.demo.dto.backendchallanges.Collatz;
 import com.example.demo.dto.backendchallanges.CreateUserAccount;
 import com.example.demo.dto.backendchallanges.CuritibaRes;
 import com.example.demo.dto.backendchallanges.ImaExp;
-import com.example.demo.impl.UserImplementation;
+import com.example.demo.impl.backendchallanges.UserImplementation;
 import com.example.demo.model.backendchallanges.UserTable;
 import com.example.demo.repositories.CityRepository;
 import com.example.demo.repositories.UserRepository;

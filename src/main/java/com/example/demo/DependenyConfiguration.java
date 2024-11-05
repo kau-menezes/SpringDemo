@@ -4,8 +4,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 
-import com.example.demo.impl.UserImplementation;
 import com.example.demo.impl.ExampleLoginService;
+import com.example.demo.impl.backendchallanges.UserImplementation;
 import com.example.demo.services.UserService;
 import com.example.demo.services.LoginService;
 
