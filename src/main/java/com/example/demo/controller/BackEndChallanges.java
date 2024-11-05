@@ -9,11 +9,11 @@ import com.example.demo.dto.backendchallanges.Collatz;
 import com.example.demo.dto.backendchallanges.CreateUserAccount;
 import com.example.demo.dto.backendchallanges.CuritibaRes;
 import com.example.demo.dto.backendchallanges.ImaExp;
-import com.example.demo.impl.CreateUserImplementation;
+import com.example.demo.impl.UserImplementation;
 import com.example.demo.model.backendchallanges.UserTable;
 import com.example.demo.repositories.CityRepository;
-import com.example.demo.repositories.CreateUserRepository;
-import com.example.demo.services.CreateUser;
+import com.example.demo.repositories.UserRepository;
+import com.example.demo.services.UserService;
 
 import java.util.*;
 
@@ -27,7 +27,7 @@ public class BackEndChallanges {
     CityRepository cityRepo;
 
     @Autowired
-    CreateUser createUserService;
+    UserService createUserService;
 
     /* ----------------------------------- C1 ----------------------------------- */
 

@@ -8,8 +8,9 @@ import org.springframework.stereotype.Repository;
 import com.example.demo.model.backendchallanges.UserTable;
 
 @Repository
-public interface CreateUserRepository extends JpaRepository<UserTable, Long> {
+public interface UserRepository extends JpaRepository<UserTable, Long> {
 
     List<UserTable> findByEmail(String email); 
+    List<UserTable> findByUsername(String username); 
 
 } 
