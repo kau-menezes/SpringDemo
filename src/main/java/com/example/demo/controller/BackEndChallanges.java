@@ -155,4 +155,11 @@ public class BackEndChallanges {
     public String updatePasswordUser(@RequestBody ChangeUserPassword user) {
         return createUserService.changePassword(user);
     }
+
+    /* ----------------------------------- C8 ----------------------------------- */
+    @PostMapping("/user")
+
+    public String bycryptUser(@RequestBody ChangeUserPassword user) {
+        return createUserService.changePassword(user);
+    }
 }
