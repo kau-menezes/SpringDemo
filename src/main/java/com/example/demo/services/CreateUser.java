@@ -1,7 +1,7 @@
 package com.example.demo.services;
 
-import com.example.demo.model.backendchallanges.UserTable;
+import com.example.demo.dto.backendchallanges.CreateUserAccount;
 
 public interface CreateUser {
-    UserTable login(String username, String password);
+    String login(CreateUserAccount user);
 }

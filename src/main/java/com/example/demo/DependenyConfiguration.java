@@ -4,7 +4,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 
+import com.example.demo.impl.CreateUserImplementation;
 import com.example.demo.impl.ExampleLoginService;
+import com.example.demo.services.CreateUser;
 import com.example.demo.services.LoginService;
 
 @Configuration
@@ -19,5 +21,10 @@ public class DependenyConfiguration {
 
     public LoginService loginService() {
         return new ExampleLoginService("don", "ferrari");
+    }
+
+    @Bean
+    public CreateUser createUserService() {
+        return new CreateUserImplementation();
     }
 }
