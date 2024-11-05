@@ -4,15 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.example.demo.dto.backendchallanges.ChangeUserPassword;
 import com.example.demo.dto.backendchallanges.Cities;
 import com.example.demo.dto.backendchallanges.Collatz;
 import com.example.demo.dto.backendchallanges.CreateUserAccount;
 import com.example.demo.dto.backendchallanges.CuritibaRes;
 import com.example.demo.dto.backendchallanges.ImaExp;
-import com.example.demo.impl.backendchallanges.UserImplementation;
-import com.example.demo.model.backendchallanges.UserTable;
 import com.example.demo.repositories.CityRepository;
-import com.example.demo.repositories.UserRepository;
 import com.example.demo.services.UserService;
 
 import java.util.*;
@@ -65,31 +63,6 @@ public class BackEndChallanges {
 
         return new ImaExp(re, im);
     }
-
-    // @PostMapping("/collatz")
-    // public ResponseEntity<CollatzRes> collatzConjecure(@RequestBody Collatz nums)
-    // {
-
-    // if (nums.step() < 0 || nums.current() < 0) {
-    // return ResponseEntity.status(400).build();
-    // }
-
-    // Long new_current = 0l;
-
-    // if (nums.current() % 2 == 0 ) {
-
-    // for (int i = 0; i < nums.step(); i++) {
-    // new_current = nums.current() / 2;
-    // }
-
-    // } else {
-    // for (int i = 0; i < nums.step(); i++) {
-    // new_current = 3 * nums.current() - 1;
-    // }
-    // }
-
-    // return ResponseEntity.ok(new CollatzRes(new_current));
-    // }
 
     /* ----------------------------------- C3 ----------------------------------- */
 
@@ -171,11 +144,15 @@ public class BackEndChallanges {
     /* ----------------------------------- C6 ----------------------------------- */
 
     @PostMapping("/create")
-    public String collatzConjecure(@RequestBody CreateUserAccount user) {
+    public String createUser(@RequestBody CreateUserAccount user) {
 
         return createUserService.login(user);
     }
 
     /* ----------------------------------- C7 ----------------------------------- */
-    // @PatchMapping("/changepassword")
+    @PatchMapping("/changepassword")
+
+    public String updatePasswordUser(@RequestBody ChangeUserPassword user) {
+        return createUserService.changePassword(user);
+    }
 }
