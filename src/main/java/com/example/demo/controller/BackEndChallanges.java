@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import com.example.demo.dto.backendchallanges.ChangeUserPassword;
 import com.example.demo.dto.backendchallanges.Cities;
 import com.example.demo.dto.backendchallanges.Collatz;
-import com.example.demo.dto.backendchallanges.CreateUserAccount;
+import com.example.demo.dto.backendchallanges.UserInfo;
 import com.example.demo.dto.backendchallanges.CuritibaRes;
 import com.example.demo.dto.backendchallanges.ImaExp;
 import com.example.demo.repositories.CityRepository;
@@ -17,7 +17,6 @@ import java.util.*;
 
 // um único controlador com baseurl
 @RestController
-@CrossOrigin(origins = { "http://localhost:5257" })
 public class BackEndChallanges {
 
     // repository do C5
@@ -144,9 +143,8 @@ public class BackEndChallanges {
     /* ----------------------------------- C6 ----------------------------------- */
 
     @PostMapping("/create")
-    public String createUser(@RequestBody CreateUserAccount user) {
-
-        return createUserService.login(user);
+    public String createUser(@RequestBody UserInfo user) {
+        return createUserService.createUser(user);
     }
 
     /* ----------------------------------- C7 ----------------------------------- */

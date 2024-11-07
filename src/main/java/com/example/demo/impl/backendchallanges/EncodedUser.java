@@ -2,9 +2,10 @@ package com.example.demo.impl.backendchallanges;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 
 import com.example.demo.dto.backendchallanges.ChangeUserPassword;
-import com.example.demo.dto.backendchallanges.CreateUserAccount;
+import com.example.demo.dto.backendchallanges.UserInfo;
 import com.example.demo.model.backendchallanges.UserTable;
 import com.example.demo.repositories.UserRepository;
 import com.example.demo.services.PasswordEncoder;
@@ -19,7 +20,7 @@ public class EncodedUser implements UserService{
     PasswordEncoder encoderGuy;
 
     @Override
-    public String login(CreateUserAccount user) {
+    public String createUser(UserInfo user) {
         var userEmail = userRepo.findByEmail(user.email());
 
         if (userEmail.size() > 0) {
@@ -47,6 +48,12 @@ public class EncodedUser implements UserService{
     public String changePassword(ChangeUserPassword data) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'changePassword'");
+    }
+
+    @Override
+    public ResponseEntity<String> login(UserInfo user) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'login'");
     }
     
 }

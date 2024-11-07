@@ -1,9 +1,10 @@
 package com.example.demo.impl.backendchallanges;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 
 import com.example.demo.dto.backendchallanges.ChangeUserPassword;
-import com.example.demo.dto.backendchallanges.CreateUserAccount;
+import com.example.demo.dto.backendchallanges.UserInfo;
 import com.example.demo.model.backendchallanges.UserTable;
 import com.example.demo.repositories.UserRepository;
 import com.example.demo.services.UserService;
@@ -73,7 +74,7 @@ public class UserImplementation implements UserService {
     }
 
     @Override
-    public String login(CreateUserAccount user) {
+    public String createUser(UserInfo user) {
         var cities = userRepo.findByEmail(user.email());
 
         if (cities.size() > 0) {
@@ -136,6 +137,21 @@ public class UserImplementation implements UserService {
 
         return "Password updated with success.";
 
+    }
+
+    @Override
+    public ResponseEntity<String> login(UserInfo user) {
+        var found = userRepo.findByUsername(null).get(0);
+
+        if (found == null)
+            return ResponseEntity.status(404).build();
+
+        if (!found.getPassword().equals(user.password()))
+            return ResponseEntity.status(403).build();
+
+        return ResponseEntity.ok("welcome, user");
+
+        
     }
 
     
